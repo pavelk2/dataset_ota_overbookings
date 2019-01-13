@@ -28,13 +28,13 @@ def isOverbooking(ota, occupancy, property, dates):
 	return False
 
 def makeBooking(ota, property, occupancy, day_checkin, day_checkout):
-	occupancy[ota][property] = list(set(occupancy[ota][property]) | set(range(day_checkin, day_checkout + 1)))
+	occupancy[ota][property] = list(set(occupancy[ota][property]) | set(range(day_checkin, day_checkout)))
 	return occupancy
 
 def generateRandomDemand(OTAS):
 	ota = OTAS[random.randint(0,len(OTAS)-1)];
-	day_checkin = random.randint(1,7)
-	day_checkout = random.randint(day_checkin+1,day_checkin+1+7)
+	day_checkin = random.randint(1,14)
+	day_checkout = random.randint(day_checkin+1,day_checkin+4)
 
 	return (ota, day_checkin, day_checkout)
 
@@ -42,11 +42,11 @@ def generateBookings(OCCUPANCY,OTAS, number_of_bookings = 1000):
 	BOOKINGS = []
 	for i in range(1,number_of_bookings+1):
 		(ota, day_checkin, day_checkout) = generateRandomDemand(OTAS)
-		available_properties = getAvailableProperties(ota, OCCUPANCY, range(day_checkin,day_checkout+1))
+		available_properties = getAvailableProperties(ota, OCCUPANCY, range(day_checkin,day_checkout))
 		print(i)
 		if len(available_properties) > 0:
 			property = available_properties[random.randint(0,len(available_properties)-1)]
-			if isOverbooking(ota, OCCUPANCY, property, range(day_checkin,day_checkout+1)):
+			if isOverbooking(ota, OCCUPANCY, property, range(day_checkin,day_checkout)):
 				status = "overbooking"
 			else:
 				OCCUPANCY = makeBooking(ota, property, OCCUPANCY, day_checkin, day_checkout)
