@@ -3,8 +3,8 @@ from ota_infra import *
 
 
 SETTINGS = {
-	"NR_PROPERTIES":50,
-	"NR_BOOKINGS": 500,
+	"NR_PROPERTIES":10000,
+	"NR_BOOKINGS": 100000,
 }
 
 OTAS = ["B","A"]
